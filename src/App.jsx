@@ -1,35 +1,37 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Global } from '@emotion/core'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
-import 'sanitize.css'
 
-import globalStyles from './global-styles'
+import TopNav from './components/top_nav/TopNav'
+import Scroller from './components/scroller/Scroller'
+import Description from './components/description/Description'
 
-const Root = styled.main`
-  display: flex;
-  flex-direction: column;
+
+const Main = styled.main`
+  /* grid */
+  display: grid;
+  grid:
+    "a1" auto
+    "b1" auto
+    "c1" auto
+    / auto;
+  /* else */
   width: 100%;
-  align-items: center;
+  max-width: ${props => props.theme.breaks.lg}px;
+
+  ${props => props.theme.queries.from('md')} {
+    grid: repeat(2, auto auto) / 40% 60%;
+  }
 `
 
-function About() {
-  return (<div>About component</div>)
-}
-
-class App extends React.PureComponent {
-  render() {
-    return (
-      <BrowserRouter>
-        <Root>
-          <Global styles={globalStyles} />
-          Hello World
-          <Link to='/about'>go to About</Link>
-          <Route exact path='/about' component={About} />
-        </Root>
-      </BrowserRouter>
-    )
-  }
+function App() {
+  return (
+    <Main>
+      <TopNav />
+      <Scroller />
+      <Description />
+    </Main>
+  )
 }
 
 export default App
