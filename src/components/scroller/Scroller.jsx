@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
+import Card from './Card'
+
 
 const Root = styled.section`
   grid-area: "b1";
   display: flex;
   width: 100%;
   overflow-y: scroll;
-  background: plum;
 
   ${props => props.theme.queries.from('md')} {
     grid-row: 1 / span 2;
@@ -18,10 +19,25 @@ const Root = styled.section`
 
 
 class Scroller extends React.PureComponent {
+  state = {
+    cards: [],
+  }
+
+  renderCards() {
+    return this.state.cards.map((data, i) =>
+      <Card
+        key={i}
+        title={data.title}
+        imgUrl={data.imgUrl}
+        description={data.description}
+      />
+    )
+  }
+
   render() {
     return (
       <Root>
-        This is the scroller
+        {this.renderCards()}
       </Root>
     )
   }

@@ -18,6 +18,7 @@ const Main = styled.main`
   /* else */
   width: 100%;
   max-width: ${props => props.theme.breaks.lg}px;
+  padding: 10px;
 
   ${props => props.theme.queries.from('md')} {
     grid: repeat(2, auto auto) / 40% 60%;

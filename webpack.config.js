@@ -18,6 +18,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/env', '@babel/react', '@emotion/css-prop'],
+          plugins: ["@babel/plugin-proposal-class-properties"],
         }
       },
       {
