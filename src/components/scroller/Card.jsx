@@ -30,13 +30,15 @@ const Img = styled.img`
   padding-bottom: 10px;
 `
 
-function Card({ title, imgUrl, description }) {
+function Card({ title, imgUrl, description, forwardedRef }) {
   const pElDescription = description.map((desc, i) =>
     <P key={i}>{desc}</P>
   )
 
   return (
-    <Root>
+    <Root
+      ref={forwardedRef}
+    >
       <Img src={imgUrl} />
       <H2>{title}</H2>
       {pElDescription}
@@ -45,9 +47,10 @@ function Card({ title, imgUrl, description }) {
 }
 
 Card.propTypes = {
-  title: PropTypes.string.isRequired,
-  imgUrl: PropTypes.string,
   description: PropTypes.array.isRequired,
+  forwardedRef: PropTypes.object,
+  imgUrl: PropTypes.string,
+  title: PropTypes.string.isRequired,
 }
 
 export default Card
