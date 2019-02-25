@@ -1,5 +1,5 @@
 const colors = {
-  text: 'salmon',
+  text: '#3D3D3D',
   primary: {
     strong: '#E10D75'
   },

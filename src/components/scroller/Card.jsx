@@ -4,25 +4,42 @@ import styled from '@emotion/styled'
 
 
 const Root = styled.article`
-  display: flex;
   width: 100%;
-  background: plum;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 25px 30px;
+  flex-shrink: 0;
+  background: white;
+`
+
+const H2 = styled.h1`
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 10px;
+`
+
+const P = styled.p`
+  padding-top: 0.9em;
+`
+
+const Img = styled.img`
+  float: left;
+  width: 200px;
+  height: 120px;
+  padding-right: 40px;
+  padding-bottom: 10px;
 `
 
 function Card({ title, imgUrl, description }) {
   const pElDescription = description.map((desc, i) =>
-    <p key={i}>desc</p>
+    <P key={i}>{desc}</P>
   )
 
   return (
     <Root>
-      <div>
-        <img src={imgUrl} />
-      </div>
-      <div>
-        <h3>{title}</h3>
-        {pElDescription}
-      </div>
+      <Img src={imgUrl} />
+      <H2>{title}</H2>
+      {pElDescription}
     </Root>
   )
 }
@@ -30,7 +47,7 @@ function Card({ title, imgUrl, description }) {
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   imgUrl: PropTypes.string,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.array.isRequired,
 }
 
 export default Card

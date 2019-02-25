@@ -1,9 +1,12 @@
+import theme from './styles/theme'
+
 const globalStyles = {
-  'h1, h2, h3, h4, h5, h6': {
-    margin: 0,
+  'body': {
+    color: `${theme.colors.text}`,
+    lineHeight: '1.3em',
   },
-  'p, h1, h2, h3, h4, h4': {
-    color: 'orange',
+  'p, h1, h2, h3, h4, h5, h6': {
+    margin: 0,
   },
   'h1': {
     fontSize: 44,
