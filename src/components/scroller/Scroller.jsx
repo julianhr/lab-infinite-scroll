@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import Card from './Card'
 import { buildUrl } from '~/utils'
+import ScrollerIntObs from './ScrollerIntObs'
 
 
 const Root = styled.section`
@@ -21,84 +21,31 @@ const Root = styled.section`
   }
 `
 
-class Scroller extends React.PureComponent {
-  refSentinel = React.createRef()
-  observer = new IntersectionObserver(this.handleIntObs())
-
-  state = {
-    cards: [],
-    isFetching: false,
-  }
-
-  componentDidMount() {
-    this.fetchCards()
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.isFetching && this.state.isFetching) {
-      this.fetchCards()
-    }
-
-    if (this.state.cards.length > prevState.cards.length) {
-      this.observer.observe(this.refSentinel.current)
-    }
-  }
-
-  fetchCards() {
+function Scroller() {
+  const fetchCards = () => {
     const baseUrl = 'http://localhost:5000/infinite-scroller/'
     const query = { paragraphs: 3, entries: 10 }
     const url = buildUrl(baseUrl, query)
 
     return fetch(url)
       .then(res => {
-        if (res.ok) return res.json()
+        if (res.ok) { return res.json() }
         else { throw Error('Fetch error') }
-      })
-      .then(data => {
-        const { cards: currCards } = this.state
-
-        if (this.refSentinel.current) {
-          this.observer.unobserve(this.refSentinel.current)
-        }
-
-        const cards = [...currCards]
-        this.appendNewCards(cards, data, currCards.length)
-        this.setState({ isFetching: false, cards })
       })
       .catch(error => {
         console.error('Fetch error:', error)
       })
   }
 
-  appendNewCards(cards, data, lastKey) {
-    data.forEach(({ title, image_url: imgUrl, description }, i) => {
-      const props = { imgUrl, title, description }
-      let CardComponent = Card
-
-      if (i === 8) {
-        CardComponent = React.forwardRef((props, ref) => <Card forwardedRef={ref} {...props} />)
-        props.forwardedRef = this.refSentinel
-      }
-
-      cards.push( <CardComponent key={lastKey + i} {...props} /> )
-    })
+  const renderScroller = () => {
+    if (true) { return <ScrollerIntObs cardFetcher={fetchCards} /> }
   }
 
-  handleIntObs() {
-    const parent = this
-
-    return (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !parent.state.isFetching) {
-          parent.setState({ isFetching: true })
-        }
-      })
-    }
-  }
-
-  render() {
-    return <Root>{this.state.cards}</Root>
-  }
+  return (
+    <Root>
+      {renderScroller()}
+    </Root>
+  )
 }
 
 export default Scroller
