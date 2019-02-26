@@ -1,10 +1,12 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import styled from '@emotion/styled'
 import { Global } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import 'sanitize.css'
 
+import appStore from './reducers/'
 import globalStyles from './global-styles'
 import theme from './styles/theme'
 import App from './App'
@@ -21,14 +23,16 @@ const Container = styled.div`
 class Root extends React.PureComponent {
   render() {
     return (
-      <BrowserRouter>
+      <Provider store={appStore}>
         <ThemeProvider theme={theme}>
-          <Container>
-            <Global styles={globalStyles} />
-            <App />
-          </Container>
+          <BrowserRouter>
+            <Container>
+              <Global styles={globalStyles} />
+              <App />
+            </Container>
+          </BrowserRouter>
         </ThemeProvider>
-      </BrowserRouter>
+      </Provider>
     )
   }
 }

@@ -1,5 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { connect } from 'react-redux'
 
 import { buildUrl } from '~/utils'
 import ScrollerIntObs from './ScrollerIntObs'
@@ -21,7 +23,7 @@ const Root = styled.section`
   }
 `
 
-function Scroller() {
+function Scroller(props) {
   const fetchCards = () => {
     const baseUrl = 'http://localhost:5000/infinite-scroller/'
     const query = { paragraphs: 3, entries: 10 }
@@ -38,7 +40,10 @@ function Scroller() {
   }
 
   const renderScroller = () => {
-    if (true) { return <ScrollerIntObs cardFetcher={fetchCards} /> }
+    switch (props.hydrationMethod) {
+      case 'intersectionObserver':
+        return <ScrollerIntObs cardFetcher={fetchCards} />
+    }
   }
 
   return (
@@ -48,4 +53,12 @@ function Scroller() {
   )
 }
 
-export default Scroller
+Scroller.propTypes = {
+  hydrationMethod: PropTypes.string,
+}
+
+function mapStateToProps({ hydrationMethod }) {
+  return { hydrationMethod }
+}
+
+export default connect(mapStateToProps)(Scroller)
