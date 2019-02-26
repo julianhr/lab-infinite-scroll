@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 import AppNav from './components/app_nav/AppNav'
-import Scroller from './components/scroller/Scroller'
+import Scrollers from './components/scrollers/Scrollers'
 import Description from './components/description/Description'
 
 
@@ -29,7 +29,7 @@ function App() {
   return (
     <Main>
       <AppNav />
-      <Scroller />
+      <Scrollers />
       <Description />
     </Main>
   )

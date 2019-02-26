@@ -19,7 +19,7 @@ const Root = styled.section`
   }
 `
 
-function Scroller({ visibilityMethod, recordsPerFetch }) {
+function Scrollers({ visibilityMethod, recordsPerFetch }) {
   const fetchCards = () => {
     const baseUrl = 'http://localhost:5000/infinite-scroller/'
     const query = { paragraphs: 3, entries: recordsPerFetch }
@@ -53,7 +53,7 @@ function Scroller({ visibilityMethod, recordsPerFetch }) {
   )
 }
 
-Scroller.propTypes = {
+Scrollers.propTypes = {
   visibilityMethod: PropTypes.string,
   recordsPerFetch: PropTypes.number,
 }
@@ -62,4 +62,4 @@ const mapStateToProps = ({ recordsPerFetch, visibilityMethod }) => (
   { visibilityMethod, recordsPerFetch }
 )
 
-export default connect(mapStateToProps)(Scroller)
+export default connect(mapStateToProps)(Scrollers)
