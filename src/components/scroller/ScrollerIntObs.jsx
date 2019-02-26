@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Card from './Card'
 
@@ -7,6 +8,7 @@ import Card from './Card'
 class ScrollerIntObs extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
+    sentinelPosition: PropTypes.number,
   }
 
   refSentinel = React.createRef()
@@ -52,16 +54,19 @@ class ScrollerIntObs extends React.PureComponent {
   }
 
   appendNewCards(cards, data, lastKey) {
+    const { sentinelPosition } = this.props
+
     data.forEach(({ title, image_url: imgUrl, description }, i) => {
-      const props = { imgUrl, title, description }
+      const position = lastKey + i + 1
+      const props = { imgUrl, title, description, position }
       let CardComponent = Card
 
-      if (i === 8) {
+      if (i+1 === sentinelPosition) {
         CardComponent = React.forwardRef((props, ref) => <Card forwardedRef={ref} {...props} />)
         props.forwardedRef = this.refSentinel
       }
 
-      cards.push( <CardComponent key={lastKey + i} {...props} /> )
+      cards.push( <CardComponent key={lastKey+i} {...props} /> )
     })
   }
 
@@ -86,4 +91,8 @@ class ScrollerIntObs extends React.PureComponent {
   }
 }
 
-export default ScrollerIntObs
+const mapStateToProps = ({ sentinelPosition }) => (
+  { sentinelPosition }
+)
+
+export default connect(mapStateToProps)(ScrollerIntObs)

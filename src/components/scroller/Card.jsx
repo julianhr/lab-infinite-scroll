@@ -9,7 +9,6 @@ const Root = styled.article`
   margin-bottom: 10px;
   padding: 25px 30px;
   flex-shrink: 0;
-  background: white;
 `
 
 const H2 = styled.h1`
@@ -30,7 +29,7 @@ const Img = styled.img`
   padding-bottom: 10px;
 `
 
-function Card({ title, imgUrl, description, forwardedRef }) {
+function Card({ title, imgUrl, description, forwardedRef, position }) {
   const pElDescription = description.map((desc, i) =>
     <P key={i}>{desc}</P>
   )
@@ -38,9 +37,13 @@ function Card({ title, imgUrl, description, forwardedRef }) {
   return (
     <Root
       ref={forwardedRef}
+      css={{
+        background: forwardedRef ? '#e9e7f6' : 'white',
+        border: forwardedRef ? '1px solid #c5c3d3' : null,
+      }}
     >
       <Img src={imgUrl} />
-      <H2>{title}</H2>
+      <H2>{`${position}. ${title}`}</H2>
       {pElDescription}
     </Root>
   )
@@ -51,6 +54,7 @@ Card.propTypes = {
   forwardedRef: PropTypes.object,
   imgUrl: PropTypes.string,
   title: PropTypes.string.isRequired,
+  position: PropTypes.number,
 }
 
 export default Card

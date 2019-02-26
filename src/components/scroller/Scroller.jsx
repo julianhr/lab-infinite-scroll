@@ -23,10 +23,10 @@ const Root = styled.section`
   }
 `
 
-function Scroller(props) {
+function Scroller({ visibilityMethod, recordsPerFetch }) {
   const fetchCards = () => {
     const baseUrl = 'http://localhost:5000/infinite-scroller/'
-    const query = { paragraphs: 3, entries: 10 }
+    const query = { paragraphs: 3, entries: recordsPerFetch }
     const url = buildUrl(baseUrl, query)
 
     return fetch(url)
@@ -40,7 +40,7 @@ function Scroller(props) {
   }
 
   const renderScroller = () => {
-    switch (props.hydrationMethod) {
+    switch (visibilityMethod) {
       case 'intersectionObserver':
         return <ScrollerIntObs cardFetcher={fetchCards} />
       default:
@@ -56,11 +56,12 @@ function Scroller(props) {
 }
 
 Scroller.propTypes = {
-  hydrationMethod: PropTypes.string,
+  visibilityMethod: PropTypes.string,
+  recordsPerFetch: PropTypes.number,
 }
 
-function mapStateToProps({ hydrationMethod }) {
-  return { hydrationMethod }
-}
+const mapStateToProps = ({ recordsPerFetch, visibilityMethod }) => (
+  { visibilityMethod, recordsPerFetch }
+)
 
 export default connect(mapStateToProps)(Scroller)
