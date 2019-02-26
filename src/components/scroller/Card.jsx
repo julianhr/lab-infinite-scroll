@@ -38,8 +38,8 @@ function Card({ title, imgUrl, description, forwardedRef, position }) {
     <Root
       ref={forwardedRef}
       css={{
-        background: forwardedRef ? '#e9e7f6' : 'white',
-        border: forwardedRef ? '1px solid #c5c3d3' : null,
+        background: forwardedRef ? '#f0d5ea' : 'white',
+        border: forwardedRef ? '1px solid #a07f99' : null,
       }}
     >
       <Img src={imgUrl} />

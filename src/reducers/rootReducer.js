@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     recordsPerFetchMin: 4,
     recordsPerFetchMax: 10,
     // editable
-    visibilityMethod: 'clientRectContainer',
+    visibilityMethod: 'sentinelClientRect',
     recordsPerFetch: 8,
     sentinelPosition: 7,
 }

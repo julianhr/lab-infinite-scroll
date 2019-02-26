@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { buildUrl } from '~/utils'
 import ScrollerIntObs from './ScrollerIntObs'
 import ScrollerBoundRect from './ScrollerBoundRect'
+import ScrollerSentinelClientRect from './ScrollerSentinelClientRect'
 
 
 const Root = styled.section`
@@ -38,8 +39,10 @@ function Scroller({ visibilityMethod, recordsPerFetch }) {
     switch (visibilityMethod) {
       case 'intersectionObserver':
         return <ScrollerIntObs cardFetcher={fetchCards} />
-      case 'clientRectContainer':
+      case 'containerScrollHeights':
         return <ScrollerBoundRect cardFetcher={fetchCards} />
+      case 'sentinelClientRect':
+        return <ScrollerSentinelClientRect cardFetcher={fetchCards} />
     }
   }
 

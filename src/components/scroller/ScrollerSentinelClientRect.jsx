@@ -14,28 +14,22 @@ const Root = styled.div`
   overflow-y: scroll;
 `
 
-class ScrollerIntObs extends React.PureComponent {
+class ScrollerSentinelClientRect extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
     sentinelPosition: PropTypes.number,
   }
-
-  refSentinel = React.createRef()
-  observer = new IntersectionObserver(this.handleIntObs())
 
   state = {
     cards: [],
     isFetching: false,
   }
 
+  refRoot = React.createRef()
+  refSentinel = React.createRef()
+
   componentDidMount() {
     this.fetchCards()
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.cards.length > prevState.cards.length) {
-      this.observer.observe(this.refSentinel.current)
-    }
   }
 
   fetchCards() {
@@ -45,10 +39,6 @@ class ScrollerIntObs extends React.PureComponent {
       .then(data => {
         const { cards: currCards } = this.state
         const cards = [...currCards]
-
-        if (this.refSentinel.current) {
-          this.observer.unobserve(this.refSentinel.current)
-        }
 
         this.appendNewCards(cards, data, currCards.length)
         this.setState({ isFetching: false, cards })
@@ -76,22 +66,23 @@ class ScrollerIntObs extends React.PureComponent {
     })
   }
 
-  handleIntObs() {
-    const parent = this
+  handleOnScroll = (event) => {
+    const { top: sentinelTop } = this.refSentinel.current.getBoundingClientRect()
+    const { clientHeight: rootClientHeight } = this.refRoot.current
+    const isSentinelVisible = sentinelTop <= rootClientHeight
 
-    return (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !parent.state.isFetching) {
-          parent.setState({ isFetching: true })
-          parent.fetchCards()
-        }
-      })
+    if (!this.state.isFetching && isSentinelVisible) {
+      this.setState({ isFetching: true })
+      this.fetchCards()
     }
   }
 
   render() {
     return (
-      <Root>
+      <Root
+        ref={this.refRoot}
+        onScroll={this.handleOnScroll}
+      >
         {this.state.cards}
       </Root>
     )
@@ -102,4 +93,4 @@ const mapStateToProps = ({ sentinelPosition }) => (
   { sentinelPosition }
 )
 
-export default connect(mapStateToProps)(ScrollerIntObs)
+export default connect(mapStateToProps)(ScrollerSentinelClientRect)

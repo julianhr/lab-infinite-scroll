@@ -11,8 +11,16 @@ function VisibilityMethodSelector({ visibilityMethod, setVisibilityMethod }) {
   return (
     <Selector
       label='Visibility Method:'
-      keys={['intersectionObserver', 'clientRectContainer']}
-      values={['Intersection Observer', "Container's bounding rectangle"]}
+      keys={[
+        'intersectionObserver',
+        'containerScrollHeights',
+        'sentinelClientRect',
+      ]}
+      values={[
+        'Intersection Observer with Sentinel',
+        'Container scroll and client heights',
+        'Sentinel bounding client rectangle',
+      ]}
       selected={visibilityMethod}
       onChange={setVisibilityMethod}
     />

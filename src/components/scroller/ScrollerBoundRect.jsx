@@ -29,20 +29,15 @@ class ScrollerBoundRect extends React.PureComponent {
     this.fetchCards()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.isFetching && this.state.isFetching) {
-      this.fetchCards()
-    }
-  }
-
   handleOnScroll = (event) => {
     if (!this.state.isFetching && this.canFetchCards(event.target)) {
       this.setState({ isFetching: true })
+      this.fetchCards()
     }
   }
   
-  canFetchCards(element) {
-    const { scrollHeight, scrollTop, clientHeight } = element
+  canFetchCards(containerElement) {
+    const { scrollHeight, scrollTop, clientHeight } = containerElement
     const buffer = 500
     return scrollHeight - scrollTop < clientHeight + buffer
   }
