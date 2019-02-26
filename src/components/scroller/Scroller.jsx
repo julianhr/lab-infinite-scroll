@@ -5,17 +5,12 @@ import { connect } from 'react-redux'
 
 import { buildUrl } from '~/utils'
 import ScrollerIntObs from './ScrollerIntObs'
+import ScrollerBoundRect from './ScrollerBoundRect'
 
 
 const Root = styled.section`
   grid-area: b1;
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  height: 70vh;
-  padding: 10px 10px 0;
-  overflow-y: scroll;
-  background: #e8e8e8;
 
   ${props => props.theme.queries.from('md')} {
     grid-row: 1 / span 2;
@@ -43,8 +38,8 @@ function Scroller({ visibilityMethod, recordsPerFetch }) {
     switch (visibilityMethod) {
       case 'intersectionObserver':
         return <ScrollerIntObs cardFetcher={fetchCards} />
-      default:
-        return <ScrollerIntObs cardFetcher={fetchCards} />
+      case 'clientRectContainer':
+        return <ScrollerBoundRect cardFetcher={fetchCards} />
     }
   }
 

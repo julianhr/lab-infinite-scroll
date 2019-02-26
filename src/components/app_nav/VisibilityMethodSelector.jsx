@@ -7,13 +7,13 @@ import { setVisibilityMethod } from '~/actions/rootActions'
 import Selector from './Selector'
 
 
-function VisibilityMethodSelector({ setVisibilityMethod }) {
+function VisibilityMethodSelector({ visibilityMethod, setVisibilityMethod }) {
   return (
     <Selector
       label='Visibility Method:'
-      keys={['intersectionObserver', 'boundRect']}
-      values={['Intersection Observer', 'Bound Rectangle']}
-      selected='intersectionObserver'
+      keys={['intersectionObserver', 'clientRectContainer']}
+      values={['Intersection Observer', "Container's bounding rectangle"]}
+      selected={visibilityMethod}
       onChange={setVisibilityMethod}
     />
   )
@@ -21,10 +21,15 @@ function VisibilityMethodSelector({ setVisibilityMethod }) {
 
 VisibilityMethodSelector.propTypes = {
   setVisibilityMethod: PropTypes.func,
+  visibilityMethod: PropTypes.string,
 }
+
+const mapStateToProps = ({ visibilityMethod }) => (
+  { visibilityMethod }
+)
 
 const mapDispatchToProps = {
   setVisibilityMethod
 }
 
-export default connect(null, mapDispatchToProps)(VisibilityMethodSelector)
+export default connect(mapStateToProps, mapDispatchToProps)(VisibilityMethodSelector)
