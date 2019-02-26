@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { connect } from 'react-redux'
 
 import Card from './Card'
 
@@ -14,10 +13,9 @@ const Root = styled.div`
   overflow-y: scroll;
 `
 
-class ScrollerBoundRect extends React.PureComponent {
+class ScrollerContainerHeights extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
-    sentinelPosition: PropTypes.number,
   }
 
   state = {
@@ -76,8 +74,4 @@ class ScrollerBoundRect extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ sentinelPosition }) => (
-  { sentinelPosition }
-)
-
-export default connect(mapStateToProps)(ScrollerBoundRect)
+export default ScrollerContainerHeights

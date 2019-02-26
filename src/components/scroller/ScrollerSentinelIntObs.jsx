@@ -14,19 +14,19 @@ const Root = styled.div`
   overflow-y: scroll;
 `
 
-class ScrollerIntObs extends React.PureComponent {
+class ScrollerSentinelIntObs extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
     sentinelPosition: PropTypes.number,
   }
 
-  refSentinel = React.createRef()
-  observer = new IntersectionObserver(this.handleIntObs())
-
   state = {
     cards: [],
     isFetching: false,
   }
+
+  refSentinel = React.createRef()
+  observer = new IntersectionObserver(this.handleIntObs())
 
   componentDidMount() {
     this.fetchCards()
@@ -102,4 +102,4 @@ const mapStateToProps = ({ sentinelPosition }) => (
   { sentinelPosition }
 )
 
-export default connect(mapStateToProps)(ScrollerIntObs)
+export default connect(mapStateToProps)(ScrollerSentinelIntObs)

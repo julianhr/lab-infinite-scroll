@@ -4,8 +4,8 @@ import styled from '@emotion/styled'
 import { connect } from 'react-redux'
 
 import { buildUrl } from '~/utils'
-import ScrollerIntObs from './ScrollerIntObs'
-import ScrollerBoundRect from './ScrollerBoundRect'
+import ScrollerSentinelIntObs from './ScrollerSentinelIntObs'
+import ScrollerContainerHeights from './ScrollerContainerHeights'
 import ScrollerSentinelClientRect from './ScrollerSentinelClientRect'
 
 
@@ -38,9 +38,9 @@ function Scroller({ visibilityMethod, recordsPerFetch }) {
   const renderScroller = () => {
     switch (visibilityMethod) {
       case 'intersectionObserver':
-        return <ScrollerIntObs cardFetcher={fetchCards} />
+        return <ScrollerSentinelIntObs cardFetcher={fetchCards} />
       case 'containerScrollHeights':
-        return <ScrollerBoundRect cardFetcher={fetchCards} />
+        return <ScrollerContainerHeights cardFetcher={fetchCards} />
       case 'sentinelClientRect':
         return <ScrollerSentinelClientRect cardFetcher={fetchCards} />
     }
