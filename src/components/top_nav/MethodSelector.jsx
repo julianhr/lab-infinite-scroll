@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { connect } from 'react-redux'
+
+import { setHydrationMethod } from '~/actions/rootActions'
 
 
 const Root = styled.div`
@@ -18,18 +21,29 @@ const Root = styled.div`
     background-color: ${({ theme }) => theme.colors.field.background};
   }
 `
-const noOp = () => {}
 
-function Method() {
+function MethodSelector(props) {
   return (
     <Root>
       <label htmlFor="method">Hydration method:</label>
-      <select name="method" id="method" onChange={noOp}>
-        <option value="sentiner">Sentinel</option>
-        <option value="intersection">Intersection Observer</option>
+      <select
+        name='method'
+        id='method'
+        onChange={(event) => props.setHydrationMethod(event.target.value)}
+      >
+        <option value="intersectionObserver">Intersection Observer</option>
+        <option value="boundRect">Sentinel</option>
       </select>
     </Root>
   )
 }
 
-export default Method
+MethodSelector.propTypes = {
+  setHydrationMethod: PropTypes.func,
+}
+
+const mapDispatchToProps = {
+  setHydrationMethod
+}
+
+export default connect(null, mapDispatchToProps)(MethodSelector)

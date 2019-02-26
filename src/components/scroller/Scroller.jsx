@@ -43,6 +43,8 @@ function Scroller(props) {
     switch (props.hydrationMethod) {
       case 'intersectionObserver':
         return <ScrollerIntObs cardFetcher={fetchCards} />
+      default:
+        return <ScrollerIntObs cardFetcher={fetchCards} />
     }
   }
 

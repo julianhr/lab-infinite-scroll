@@ -1,4 +1,4 @@
-import rootReducer from './root_reducer'
+import rootReducer from './rootReducer'
 import { configureStore } from 'redux-starter-kit'
 
 
