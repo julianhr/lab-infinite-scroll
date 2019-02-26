@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import TopNav from './components/top_nav/TopNav'
+import AppNav from './components/app_nav/AppNav'
 import Scroller from './components/scroller/Scroller'
 import Description from './components/description/Description'
 
@@ -28,7 +28,7 @@ const Main = styled.main`
 function App() {
   return (
     <Main>
-      <TopNav />
+      <AppNav />
       <Scroller />
       <Description />
     </Main>
