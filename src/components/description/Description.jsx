@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { connect } from 'react-redux'
+
+import mdScrollerContainerHeights from './scroller_container_height.md'
 
 
-const Root = styled.div`
-  grid-area: "b1";
+const Root = styled.section`
+  grid-area: b1;
   display: flex;
+  flex-direction: column;
   width: 100%;
 
   ${props => props.theme.queries.from('md')} {
@@ -15,13 +19,26 @@ const Root = styled.div`
 `
 
 class Description extends React.PureComponent {
+  static propTypes = {
+    visibilityMethod: PropTypes.string,
+  }
+  
+  getDescription() {
+    switch (this.props.visibilityMethod) {
+      case 'intersectionObserver':
+        return mdScrollerContainerHeights
+    }
+  }
+
   render() {
     return (
-      <Root>
-        Testing Description
-      </Root>
+      <Root dangerouslySetInnerHTML={{ __html: this.getDescription() }} />
     )
   }
 }
 
-export default Description
+const mapStateToProps = ({ visibilityMethod }) => (
+  { visibilityMethod }
+)
+
+export default connect(mapStateToProps)(Description)
