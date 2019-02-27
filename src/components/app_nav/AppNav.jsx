@@ -5,7 +5,7 @@ import ScrollerSelector from './ScrollerSelector'
 
 
 const Root = styled.nav`
-  grid-area: "a1";
+  grid-area: a1;
   width: 100%;
   display: flex;
   flex-direction: column;

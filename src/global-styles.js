@@ -8,6 +8,9 @@ const globalStyles = {
   'p, h1, h2, h3, h4, h5, h6': {
     margin: 0,
   },
+  'p': {
+    padding: '.8em 0'
+  },
   'h1': {
     fontSize: 44,
   },
@@ -27,6 +30,10 @@ const globalStyles = {
   },
   'h6': {
     fontSize: 8,
+  },
+  'code': {
+    color: '#c23838',
+    fontSize: 14,
   }
 }
 

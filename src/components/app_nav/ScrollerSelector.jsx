@@ -18,7 +18,7 @@ function ScrollerSelector({ scrollerType, setScrollerType }) {
       ]}
       values={[
         'Intersection Observer with Sentinel',
-        'Container scroll and client heights',
+        'Container scrollHeight and scrollTop',
         'Sentinel bounding client rectangle',
       ]}
       selected={scrollerType}

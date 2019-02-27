@@ -18,7 +18,7 @@ const H2 = styled.h1`
 `
 
 const P = styled.p`
-  padding-top: 0.9em;
+  padding-top: 5px;
 `
 
 const Img = styled.img`

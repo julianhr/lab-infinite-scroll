@@ -22,7 +22,7 @@ const Root = styled.section`
 function Scrollers({ scrollerType, recordsPerFetch }) {
   const fetchCards = () => {
     const baseUrl = 'http://localhost:5000/infinite-scroller/'
-    const query = { paragraphs: 3, entries: recordsPerFetch }
+    const query = { paragraphs: 2, entries: recordsPerFetch }
     const url = buildUrl(baseUrl, query)
 
     return fetch(url)

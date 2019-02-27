@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { connect } from 'react-redux'
 
+import mdScrollerIntObs from './scroller_int_obs.md'
 import mdScrollerContainerHeights from './scroller_container_height.md'
+import mdScrolerSentinelClientRect from './scroller_sentinel_client_rect.md'
 
 
 const Root = styled.section`
@@ -26,13 +28,19 @@ class Description extends React.PureComponent {
   getDescription() {
     switch (this.props.scrollerType) {
       case 'intersectionObserver':
+        return mdScrollerIntObs
+      case 'containerScrollHeights':
         return mdScrollerContainerHeights
+      case 'sentinelClientRect':
+        return mdScrolerSentinelClientRect
     }
   }
 
   render() {
     return (
-      <Root dangerouslySetInnerHTML={{ __html: this.getDescription() }} />
+      <Root
+        dangerouslySetInnerHTML={{ __html: this.getDescription() }}
+      />
     )
   }
 }
