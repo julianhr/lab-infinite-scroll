@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { connect } from 'react-redux'
 
 import Card from './Card'
+import { setEntryCount, setIsFetching } from '~/actions/rootActions'
 
 
 const Root = styled.div`
@@ -15,11 +17,13 @@ const Root = styled.div`
 class ScrollerContainerHeights extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
+    isFetching: PropTypes.bool,
+    setEntryCount: PropTypes.func,
+    setIsFetching: PropTypes.func,
   }
 
   state = {
-    cards: [],
-    isFetching: false,
+    cards: []
   }
 
   componentDidMount() {
@@ -27,8 +31,11 @@ class ScrollerContainerHeights extends React.PureComponent {
   }
 
   handleOnScroll = (event) => {
-    if (!this.state.isFetching && this.canFetchCards(event.target)) {
-      this.setState({ isFetching: true })
+    const { isFetching } = this.props
+    const { cards } = this.state
+
+    if (!isFetching && this.canFetchCards(event.target) && cards.length < 200) {
+      this.props.setIsFetching(true)
       this.fetchCards()
     }
   }
@@ -46,10 +53,12 @@ class ScrollerContainerHeights extends React.PureComponent {
         const cards = [...currCards]
 
         this.appendNewCards(cards, data, currCards.length)
-        this.setState({ isFetching: false, cards })
+        this.setState({ cards })
+        this.props.setEntryCount(cards.length)
+        this.props.setIsFetching(false)
       })
       .catch(error => {
-        this.setState({ isFetching: false })
+        this.props.setIsFetching(false)
         console.error('Fetch error:', error)
       })
   }
@@ -73,4 +82,7 @@ class ScrollerContainerHeights extends React.PureComponent {
   }
 }
 
-export default ScrollerContainerHeights
+const mapStateToProps = ({ isFetching }) => ({ isFetching })
+const mapDispatchToProps = { setEntryCount, setIsFetching }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollerContainerHeights)

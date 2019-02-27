@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import { connect } from 'react-redux'
 
 import { buildUrl } from '~/utils'
+import ScrollerStatus from './ScrollerStatus'
 import ScrollerSentinelIntObs from './ScrollerSentinelIntObs'
 import ScrollerContainerHeights from './ScrollerContainerHeights'
 import ScrollerSentinelClientRect from './ScrollerSentinelClientRect'
@@ -58,6 +59,7 @@ function Scrollers({ scrollerType, recordsPerFetch }) {
 
   return (
     <Root>
+      <ScrollerStatus />
       <Contour>
         {renderScroller()}
       </Contour>

@@ -32,12 +32,7 @@ ScrollerSelector.propTypes = {
   scrollerType: PropTypes.string,
 }
 
-const mapStateToProps = ({ scrollerType }) => (
-  { scrollerType }
-)
-
-const mapDispatchToProps = {
-  setScrollerType
-}
+const mapStateToProps = ({ scrollerType }) => ({ scrollerType })
+const mapDispatchToProps = { setScrollerType }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScrollerSelector)

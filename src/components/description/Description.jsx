@@ -10,8 +10,6 @@ import mdScrolerSentinelClientRect from './scroller_sentinel_client_rect.md'
 
 const Root = styled.section`
   grid-area: b1;
-  display: flex;
-  flex-direction: column;
   padding: 0 30px 20px;
   width: 100%;
 
@@ -19,6 +17,10 @@ const Root = styled.section`
     grid-row: 2 / span 1;
     grid-column: 1 / span 1
   }
+`
+
+const P = styled.p`
+  padding-top: 40px;
 `
 
 class Description extends React.PureComponent {
@@ -39,9 +41,14 @@ class Description extends React.PureComponent {
 
   render() {
     return (
-      <Root
-        dangerouslySetInnerHTML={{ __html: this.getDescription() }}
-      />
+      <Root>
+        <div
+          dangerouslySetInnerHTML={{ __html: this.getDescription() }}
+        />
+        <P>
+          View on <a href="https://github.com/julianhr/lab-infinite-scroll" target='_blank' rel='noopener noreferrer'>Github</a>
+        </P>
+      </Root>
     )
   }
 }

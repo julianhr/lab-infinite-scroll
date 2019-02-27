@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import styled from '@emotion/styled'
+import { connect } from 'react-redux'
 
 import Card from './Card'
+import { setEntryCount, setIsFetching } from '~/actions/rootActions'
 
 
 const Root = styled.div`
@@ -16,12 +17,14 @@ const Root = styled.div`
 class ScrollerSentinelClientRect extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
+    isFetching: PropTypes.bool,
     sentinelPosition: PropTypes.number,
+    setEntryCount: PropTypes.func,
+    setIsFetching: PropTypes.func,
   }
 
   state = {
-    cards: [],
-    isFetching: false,
+    cards: []
   }
 
   refRoot = React.createRef()
@@ -40,10 +43,12 @@ class ScrollerSentinelClientRect extends React.PureComponent {
         const cards = [...currCards]
 
         this.appendNewCards(cards, data, currCards.length)
-        this.setState({ isFetching: false, cards })
+        this.setState({ cards })
+        this.props.setEntryCount(cards.length)
+        this.props.setIsFetching(false)
       })
       .catch(error => {
-        this.setState({ isFetching: false })
+        this.props.setIsFetching(false)
         console.error('Fetch error:', error)
       })
   }
@@ -66,12 +71,14 @@ class ScrollerSentinelClientRect extends React.PureComponent {
   }
 
   handleOnScroll = (event) => {
+    const { isFetching } = this.props
+    const { cards } = this.state
     const { top: sentinelTop } = this.refSentinel.current.getBoundingClientRect()
     const { clientHeight: rootClientHeight } = this.refRoot.current
     const isSentinelVisible = sentinelTop <= rootClientHeight
 
-    if (!this.state.isFetching && isSentinelVisible) {
-      this.setState({ isFetching: true })
+    if (!isFetching && isSentinelVisible && cards.length < 200) {
+      this.props.setIsFetching(true)
       this.fetchCards()
     }
   }
@@ -88,8 +95,10 @@ class ScrollerSentinelClientRect extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ sentinelPosition }) => (
-  { sentinelPosition }
+const mapStateToProps = ({ sentinelPosition, isFetching }) => (
+  { sentinelPosition, isFetching }
 )
 
-export default connect(mapStateToProps)(ScrollerSentinelClientRect)
+const mapDispatchToProps = { setEntryCount, setIsFetching }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollerSentinelClientRect)

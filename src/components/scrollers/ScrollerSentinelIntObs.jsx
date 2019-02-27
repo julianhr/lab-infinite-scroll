@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import styled from '@emotion/styled'
+import { connect } from 'react-redux'
 
 import Card from './Card'
+import { setEntryCount, setIsFetching } from '~/actions/rootActions'
 
 
 const Root = styled.div`
@@ -16,12 +17,14 @@ const Root = styled.div`
 class ScrollerSentinelIntObs extends React.PureComponent {
   static propTypes = {
     cardFetcher: PropTypes.func,
+    isFetching: PropTypes.bool,
     sentinelPosition: PropTypes.number,
+    setEntryCount: PropTypes.func,
+    setIsFetching: PropTypes.func,
   }
 
   state = {
-    cards: [],
-    isFetching: false,
+    cards: []
   }
 
   refSentinel = React.createRef()
@@ -50,10 +53,12 @@ class ScrollerSentinelIntObs extends React.PureComponent {
         }
 
         this.appendNewCards(cards, data, currCards.length)
-        this.setState({ isFetching: false, cards })
+        this.setState({ cards })
+        this.props.setEntryCount(cards.length)
+        this.props.setIsFetching(false)
       })
       .catch(error => {
-        this.setState({ isFetching: false })
+        this.props.setIsFetching(false)
         console.error('Fetch error:', error)
       })
   }
@@ -80,8 +85,11 @@ class ScrollerSentinelIntObs extends React.PureComponent {
 
     return (entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && !parent.state.isFetching) {
-          parent.setState({ isFetching: true })
+        const { isFetching } = parent.props
+        const { cards } = parent.state
+
+        if (entry.isIntersecting && !isFetching && cards.length < 200) {
+          parent.props.setIsFetching(true)
           parent.fetchCards()
         }
       })
@@ -97,8 +105,10 @@ class ScrollerSentinelIntObs extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ sentinelPosition }) => (
-  { sentinelPosition }
+const mapStateToProps = ({ sentinelPosition, isFetching }) => (
+  { sentinelPosition, isFetching }
 )
 
-export default connect(mapStateToProps)(ScrollerSentinelIntObs)
+const mapDispatchToProps = { setEntryCount, setIsFetching }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScrollerSentinelIntObs)
