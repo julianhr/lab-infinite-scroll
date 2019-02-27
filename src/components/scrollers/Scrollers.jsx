@@ -19,7 +19,7 @@ const Root = styled.section`
   }
 `
 
-function Scrollers({ visibilityMethod, recordsPerFetch }) {
+function Scrollers({ scrollerType, recordsPerFetch }) {
   const fetchCards = () => {
     const baseUrl = 'http://localhost:5000/infinite-scroller/'
     const query = { paragraphs: 3, entries: recordsPerFetch }
@@ -36,7 +36,7 @@ function Scrollers({ visibilityMethod, recordsPerFetch }) {
   }
 
   const renderScroller = () => {
-    switch (visibilityMethod) {
+    switch (scrollerType) {
       case 'intersectionObserver':
         return <ScrollerSentinelIntObs cardFetcher={fetchCards} />
       case 'containerScrollHeights':
@@ -54,12 +54,12 @@ function Scrollers({ visibilityMethod, recordsPerFetch }) {
 }
 
 Scrollers.propTypes = {
-  visibilityMethod: PropTypes.string,
+  scrollerType: PropTypes.string,
   recordsPerFetch: PropTypes.number,
 }
 
-const mapStateToProps = ({ recordsPerFetch, visibilityMethod }) => (
-  { visibilityMethod, recordsPerFetch }
+const mapStateToProps = ({ recordsPerFetch, scrollerType }) => (
+  { scrollerType, recordsPerFetch }
 )
 
 export default connect(mapStateToProps)(Scrollers)

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import VisibilityMethodSelector from './VisibilityMethodSelector'
+import ScrollerSelector from './ScrollerSelector'
 
 
 const Root = styled.nav`
@@ -26,7 +26,7 @@ class TopNav extends React.PureComponent {
     return (
       <Root>
         <H2>Infinite Scroller</H2>
-        <VisibilityMethodSelector />
+        <ScrollerSelector />
       </Root>
     )
   }

@@ -20,11 +20,11 @@ const Root = styled.section`
 
 class Description extends React.PureComponent {
   static propTypes = {
-    visibilityMethod: PropTypes.string,
+    scrollerType: PropTypes.string,
   }
   
   getDescription() {
-    switch (this.props.visibilityMethod) {
+    switch (this.props.scrollerType) {
       case 'intersectionObserver':
         return mdScrollerContainerHeights
     }
@@ -37,8 +37,8 @@ class Description extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ visibilityMethod }) => (
-  { visibilityMethod }
+const mapStateToProps = ({ scrollerType }) => (
+  { scrollerType }
 )
 
 export default connect(mapStateToProps)(Description)

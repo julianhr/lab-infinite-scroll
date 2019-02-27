@@ -6,11 +6,11 @@ const INITIAL_STATE = {
     recordsPerFetch: 8,
     sentinelPosition: 6,
     // editable
-    visibilityMethod: 'intersectionObserver',
+    scrollerType: 'intersectionObserver',
 }
 
 export default createReducer(INITIAL_STATE, {
-    'SET_VISIBILITY_METHOD': (state, { payload }) => {
-        return { ...state, visibilityMethod: payload }
+    'SET_SCROLLER_TYPE': (state, { payload }) => {
+        return { ...state, scrollerType: payload }
     },
 })
