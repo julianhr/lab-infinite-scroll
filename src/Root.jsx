@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import 'sanitize.css'
 
 import appStore from './reducers/'
-import globalStyles from './global-styles'
+import globalStyles from './styles/globalStyles'
 import theme from './styles/theme'
 import App from './App'
 

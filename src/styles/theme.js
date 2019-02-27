@@ -11,7 +11,7 @@ const colors = {
 const breaks = {
   xs: 0,
   sm: 420,
-  md: 800,
+  md: 900,
   lg: 1200,
 }
 

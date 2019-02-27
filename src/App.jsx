@@ -21,7 +21,10 @@ const Main = styled.main`
   padding: 10px;
 
   ${props => props.theme.queries.from('md')} {
-    grid: repeat(2, auto auto) / 40% 60%;
+    grid:
+      15vh
+      80vh
+      / 40% 60%;
   }
 `
 
@@ -29,8 +32,8 @@ function App() {
   return (
     <Main>
       <AppNav />
-      <Scrollers />
       <Description />
+      <Scrollers />
     </Main>
   )
 }

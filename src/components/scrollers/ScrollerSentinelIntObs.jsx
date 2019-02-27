@@ -7,7 +7,6 @@ import Card from './Card'
 
 
 const Root = styled.div`
-  width: 100%;
   height: 80vh;
   padding: 10px 10px 0;
   background: #e8e8e8;

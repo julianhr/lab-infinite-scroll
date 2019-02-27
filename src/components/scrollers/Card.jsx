@@ -7,8 +7,7 @@ const Root = styled.article`
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
-  padding: 25px 30px;
-  flex-shrink: 0;
+  padding: 20px 25px;
 `
 
 const H2 = styled.h1`
@@ -27,6 +26,13 @@ const Img = styled.img`
   height: 120px;
   padding-right: 40px;
   padding-bottom: 10px;
+
+  @media (max-width: 580px) {
+    width: 140px;
+    height: 90px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+  }
 `
 
 function Card({ title, imgUrl, description, forwardedRef, position }) {

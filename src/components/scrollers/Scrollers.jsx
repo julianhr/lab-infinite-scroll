@@ -10,13 +10,23 @@ import ScrollerSentinelClientRect from './ScrollerSentinelClientRect'
 
 
 const Root = styled.section`
-  grid-area: b1;
+  grid-area: c1;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px 20px;
+  align-items: center;
 
   ${props => props.theme.queries.from('md')} {
     grid-row: 1 / span 2;
     grid-column: 2 / span 1;
   }
+`
+
+const Contour = styled.div`
+  max-width: 600px;
+  border: 2px solid #dcdcdc;
 `
 
 function Scrollers({ scrollerType, recordsPerFetch }) {
@@ -48,7 +58,9 @@ function Scrollers({ scrollerType, recordsPerFetch }) {
 
   return (
     <Root>
-      {renderScroller()}
+      <Contour>
+        {renderScroller()}
+      </Contour>
     </Root>
   )
 }

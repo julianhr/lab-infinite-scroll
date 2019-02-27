@@ -12,6 +12,7 @@ const Root = styled.section`
   grid-area: b1;
   display: flex;
   flex-direction: column;
+  padding: 0 30px 20px;
   width: 100%;
 
   ${props => props.theme.queries.from('md')} {
