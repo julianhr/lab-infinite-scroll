@@ -2,6 +2,16 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+// open Markdown links in new tab
+// https://github.com/markedjs/marked/issues/655
+const marked = require('marked')
+const mdRenderer = new marked.Renderer()
+const mdRendererLink = mdRenderer.link
+mdRenderer.link = (href, title, text) => {
+    const html = mdRendererLink.call(mdRenderer, href, title, text)
+    return html.replace(/^<a /, '<a target="_blank" rel="nofollow" ')
+}
+
 
 module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
@@ -27,7 +37,13 @@ module.exports = {
       },
       {
         test: /\.md$/,
-        use: ['html-loader', 'markdown-loader'],
+        use: [
+          'html-loader',
+          {
+            loader: 'markdown-loader',
+            options: { renderer: mdRenderer }
+          }
+        ],
       }
     ]
   },
